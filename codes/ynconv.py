@@ -1,42 +1,43 @@
+
 import numpy as np
 import matplotlib.pyplot as plt
-#If using termux
-import subprocess
-import shlex
-#end if
-import os
-os.system('Xvfb :1 -screen 0 1600x1200x16  &')    # create virtual display with size 1600x1200 and 16 bit color. Color can be changed to 24 or 8
-os.environ['DISPLAY']=':1.0'    # tell X clients to use our virtual DISPLAY :1.0.
-
-
+x = np.array([1,2,3,4,2,1])
 n = np.arange(14)
 fn=(-1/2)**n
 hn1=np.pad(fn, (0,2), 'constant', constant_values=(0))
 hn2=np.pad(fn, (2,0), 'constant', constant_values=(0))
 h = hn1+hn2
-
-nh=len(h)
-x=np.array([1.0,2.0,3.0,4.0,2.0,1.0])
 nx = len(x)
+nh = len(h)
 
-y = np.zeros(nx+nh-1)
+#Convolution using toeplitz matrix
+def Conv(x,h):
+  new_h = np.zeros([nx+nh-1,nx]) #new_h is intialised with zeros.  
+  for i in range(nx+nh-1):
+    if i < nh:
+     for j in range(nx):
+      if j <= i :
+        new_h[i][j] = h[i-j]
+    else :
+     for j in range(nx-1):
+      new_h[i][j+1] = new_h[i-1][j]  
 
-for k in range(0,nx+nh-1):
-	for n in range(0,nx):
-		if k-n >= 0 and k-n < nh:
-			y[k]+=x[n]*h[k-n]
 
-print(y)
-#plots
+  return new_h @ x 
+  #Multiplying the two matrices gives the convolution of x and h.
+
+y = Conv(x,h)
+
 plt.stem(range(0,nx+nh-1),y)
-plt.title('Filter Output using Convolution')
-plt.xlabel('$n$')
-plt.ylabel('$y(n)$')
-plt.grid()# minor
+plt.grid()
+plt.xlabel("n")
+plt.ylabel("y(n)")
+plt.title("Filter Output using Convolution")
+
 
 #If using termux
-plt.savefig('../figs/ynconv.pdf')
-plt.savefig('../figs/ynconv.png')
-subprocess.run(shlex.split("termux-open ../figs/ynconv.pdf"))
+plt.savefig('./figs/ynconv.pdf')
+plt.savefig('./figs/ynconv.png')
+
 #else
-#plt.show()
+plt.show()
