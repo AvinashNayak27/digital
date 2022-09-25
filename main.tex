@@ -773,43 +773,91 @@ Since $\abs{H(e^{j\omega})}$ is function of cosine we can say it is periodic.And
         &=\sum_{a=-\infty}^{\infty}x(n-a)h(a)
       \end{align}
     \end{enumerate}
-\section{DFT and FFT}
-\begin{enumerate}[label=\thesection.\arabic*]
-\item
-Compute
-\begin{equation}
-X(k) \define \sum _{n=0}^{N-1}x(n) e^{-\j2\pi kn/N}, \quad k = 0,1,\dots, N-1
-\end{equation}
-and $H(k)$ using $h(n)$.
-\item Compute 
-\begin{equation}
-Y(k) = X(k)H(k)
-\end{equation}
-\item Compute
-\begin{equation}
- y\brak{n}={\frac {1}{N}}\sum _{k=0}^{N-1}Y\brak{k}\cdot e^{\j 2\pi kn/N},\quad n = 0,1,\dots, N-1
-\end{equation}
-\\
-\solution The following code plots Fig. \ref{fig:ynconv}. Note that this is the same as 
-$y(n)$ in  Fig. 
-\ref{fig:xnyn}. 
-%
-\begin{lstlisting}
-wget https://github.com/AvinashNayak27/digital/blob/master/codes/yndft.py
-\end{lstlisting}
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=\columnwidth]{./figs/yndft}
-\caption{$y(n)$ from the DFT}
-\label{fig:yndft}
-\end{figure}
-
-\item Repeat the previous exercise by computing $X(k), H(k)$ and $y(n)$ through FFT and 
-IFFT.
-\item Wherever possible, express all the above equations as matrix equations.
-\item Verify the above equations by generating the DFT matrix in python.
-\end{enumerate}
-%
+    \section{DFT}
+    \begin{enumerate}[label=\thesection.\arabic*]
+    \item
+    Compute
+    \begin{equation}
+    X(k) \define \sum _{n=0}^{N-1}x(n) e^{-\j2\pi kn/N}, \quad k = 0,1,\dots, N-1
+    \end{equation}
+    and $H(k)$ using $h(n)$.\\
+    \solution Download the below python code for the plot $\ref{DFT}$,
+    \begin{lstlisting}
+    wget  https://github.com/AvinashNayak27/digital/blob/master/codes/dft.py
+    \end{lstlisting}
+    And run the following command in the terminal,
+    \begin{lstlisting}
+    python3 dft.py
+    \end{lstlisting}
+    \begin{figure}[!h]
+      \includegraphics[width = \columnwidth]{figs/dft.png}
+      \centering
+      \caption{Plot of real part of Discrete Fourier Transforms of $x(n)$ and $h(n)$}
+      \label{DFT}
+    \end{figure}
+      \item Compute 
+    \begin{equation}
+    Y(k) = X(k)H(k)
+    \end{equation}
+     \solution Download the below python code for the plot $\ref{Y_k}$,
+      \begin{lstlisting}
+    wget  https://github.com/AvinashNayak27/digital/blob/master/codes/yK.py
+      \end{lstlisting}
+    Then run the following command in the terminal,
+     \begin{lstlisting}
+    python3 yK.py
+     \end{lstlisting}
+     \begin{figure}[!h]
+      \centering
+      \includegraphics[width=\columnwidth]{figs/yK.png}
+      \caption{$Y(k)$ as the product of $X(k)$ and $H(k)$}
+      \label{Y_k} 
+     \end{figure}
+    \item Compute
+    \begin{equation}
+     y\brak{n}={\frac {1}{N}}\sum _{k=0}^{N-1}Y\brak{k}\cdot e^{\j 2\pi kn/N},\quad n = 0,1,\dots, N-1
+    \end{equation}
+    \solution Download the below python code for the plot $\ref{yndft}$,
+    \begin{lstlisting}
+    wget https://github.com/AvinashNayak27/digital/blob/master/codes/yndft.py
+    \end{lstlisting}
+    Then run the following command,
+     \begin{lstlisting}
+    python3 yndft.py
+     \end{lstlisting}
+     \begin{figure}[!h]
+      \centering
+      \includegraphics[width=\columnwidth]{figs/yndft.png}
+      \caption{$y(n)$ using IDFT and difference equation}
+      \label{yndft_dif}
+     \end{figure}
+    \item Repeat the previous exercise by computing $X(k), H(k)$ and $y(n)$ through FFT and 
+    IFFT.\\
+     \solution Download the below python code for the plot $\ref{ynIIFT}$,
+      \begin{lstlisting}
+    wget https://github.com/AvinashNayak27/digital/blob/master/codes/ynIIFT.py
+      \end{lstlisting}
+      Then run the following command,
+       \begin{lstlisting}
+    python3 ynIIFT.py
+       \end{lstlisting}
+       \begin{figure}[!ht]
+         \includegraphics[width=\columnwidth]{figs/ynIIFT.png}
+         \centering
+         \caption{The plot of $y\brak{n}$ using IFFT}
+         \label{yn_ifft}
+       \end{figure}
+    %\item Wherever possible, express all the above equations as matrix equations.\\ 
+     % \solution We rewrite the definition of DFT,
+      %  \begin{equation}
+       %   X(k) \define \sum _{n=0}^{N-1}x(n) e^{-\j2\pi kn/N}, \quad k = 0,1,\dots, N-1
+        %\end{equation}
+        %To write the above equation in matrix equatons we will define something known as twiddle factor.
+       
+     % To convert the above equation in matrix equation, we will define a new term 
+    %\item Verify the above equations by generating the DFT matrix using python.
+    %\item Write the C program to compute the 8-point FFT.
+    \end{enumerate}
 \section{Exercises}
 
 Answer the following questions by looking at the python code in Problem \ref{prob:output}.
